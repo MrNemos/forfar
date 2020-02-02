@@ -1,0 +1,55 @@
+version: "3.0"
+services:
+  postgres:
+    image:  postgres
+    env_file:
+      - ".env"
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - TZ=${TZ}
+    volumes:
+      - "./docker/postgres:/var/lib/postgresql/data:Z"
+
+  redis:
+    image: redis:latest
+
+
+  site:
+    build: 
+        context: ./www
+        dockerfile: Dockerfile
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    env_file:
+      - ".env"
+    environment:
+      - TZ=${TZ}
+      - C_FORCE_ROOT=1
+    ports:
+      - "127.0.0.1:8008:8000"
+    depends_on:
+      - postgres
+      - redis
+
+    tty: true
+    volumes:
+      - "./www/:/srv/site:Z"
+
+
+  celery:
+    container_name: prod_celery
+    restart: unless-stopped
+    build:
+      context: www/.
+      dockerfile: CeleryDockerfile
+    command: celery -A map worker -E -B -l info --autoscale=20,5
+    env_file:
+      - ".env"
+    volumes:
+      - "./www/:/srv/site:Z"
+    depends_on:
+      - postgres
+      - redis
+    environment:
+      - TZ=${TZ}
+      - C_FORCE_ROOT=1
