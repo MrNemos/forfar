@@ -4,10 +4,12 @@ services:
     image:  postgres
     env_file:
       - ".env"
-    environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - TZ=${TZ}
+    environment:   # will be used by the init script
+      LC_ALL: C.UTF-8
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      TZ: ${TZ}
     volumes:
       - "./docker/postgres:/var/lib/postgresql/data:Z"
 
@@ -40,9 +42,9 @@ services:
     container_name: prod_celery
     restart: unless-stopped
     build:
-      context: www/.
+      context: ./www
       dockerfile: CeleryDockerfile
-    command: celery -A map worker -E -B -l info --autoscale=20,5
+    command: celery -A www worker -E -B -l info --autoscale=20,5
     env_file:
       - ".env"
     volumes:
