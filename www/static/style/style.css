@@ -1,0 +1,52 @@
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+}
+.header__title {
+    margin-top: 20px;
+}
+img {
+    height: 150px;
+}
+.main__chek {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-top: solid 1px black;
+}
+.main__info1 {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    list-style-type: none;
+    padding-right: 120px;
+    
+}
+.main__content {
+    margin-top: -20px;
+}
+.main__info2 {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    list-style-type: none;
+}
+.main__location {
+    padding-left: 80px;
+}
+.main__food-title {
+    padding-left: 80px;
+}
+.main__food-position {
+    padding-left: 80px;
+}
+.main__food-option {
+    display: flex;
+    justify-content: space-around;
+}
+.main__food-Payment {
+    display: flex;
+    justify-content: flex-end;
+}

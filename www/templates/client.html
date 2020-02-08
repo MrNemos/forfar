@@ -1,0 +1,110 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Order№{{order.id}}</title>
+    <link rel="stylesheet" href="{% static '/style/style.css' %}">
+    <link rel="stylesheet" href="{% static '/style/bootstrap-grid.min.css' %}">
+</head>
+<body>
+    <header class="header">
+        <div class="header__image">
+            <img src="{% static '/image/restaurant.png' %}" alt="">
+        </div>
+        <div class="header__title">
+            <h2>Ping-Pong</h2>
+        </div>
+        <div class="hrader__subtitle">
+            <p>Доставка еды</p>
+        </div>
+    </header>
+    <main>
+        <div class="main__chek">
+            <h1 class="main__chek-title">Счет № {{order.id}}</h1>
+            <p class="main__chek-subtitle">приборов: 3</p>
+        </div>
+        <div class="main__content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-6">
+                        <ul class="main__info1">
+                            <li class="main__info-time">
+                                <p id="time">На время: </p>
+                            </li>
+                            <li class="main__info-operator">
+                                <p id="operetor">Оператор: </p>
+                            </li>
+                            <li class="main__info-client">
+                                <p id="client"> Клиент: </p>
+                            </li>
+                            <li class="main__info-payment">
+                                <p id="payment">Оплата: </p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-6">
+                        <ul class="main__info2">
+                            <li class="main__info-time">
+                                <p id="adoption time">Принят:  </p>
+                            </li>
+                            <li class="main__info-courier">
+                                <p id="courier">Курьер: </p>
+                            </li>
+                            <li class="main__info-phone">
+                                <p id="phone">Телефон: </p>
+                            </li>
+                            <li class="main__info-status">
+                                <h2 id="status">Не оплачен</h2>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="main__location">
+                            <p id="location">Адрес: </p>
+                            <p id="building">Офис: </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="main__food-title">
+                            <h2 id="name">Наименование</h2>
+                        </div>
+                        <div class="main__food-position">
+                            {% if len(order.order_list) == 1 %}
+                                <h2>{{order.order_list.name}}</h2>
+                            {% else: %}
+                            {% for dish in order.order_list %}
+                                <h2>{{dish.name}}</h2>
+                            {% endfor %}
+                            {% endif% %}
+                            <h2>Сет Хару</h2>
+                            <h2>Сет Хару</h2>
+                            <h2>Сет Хару</h2>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="main__food-option">
+                            <h4 id="quantity">Кол.</h4>
+                            <h4 id="price">Цена</h4>
+                            <h4 id="amount">Сумма</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="main__food-Payment">
+                            <h2 id="payment">К оплате: {{order.total_price}} </h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
